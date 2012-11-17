@@ -1,0 +1,6 @@
+{
+	'role':            ['*'],
+	'max_results':     25,
+	'root':            './',
+	'editor':          'vim'
+}
