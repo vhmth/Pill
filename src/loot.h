@@ -23,11 +23,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <sys/param.h>
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef __LOOT_H__
+#define __LOOT_H__
+
 #include <string.h>
 
-int main() {
-	return 0;
+class Loot {
+	public:
+		Loot(string dir, unsigned int freq);
+		Loot(Loot const & source);
+		Loot const & operator=(Loot const & source);
+		~Loot();
+
+		string spill();
+	private:
+		string _dir;
+		unsigned int _freq;
 }
+
+#endif
