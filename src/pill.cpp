@@ -69,11 +69,21 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	// 3.) grab the options from external files
+	// grab the option from external files
+	if (role.compare("none") || !role.compare("")) {
+		string default_role = "";
+		// TODO: get the default role from ../options/options.json
 
-	// 4.) execv
+		if (default_role.compare("")) {
+			// we have the default role from options.json, so let's
+			// load the extensions array with the array pointed to
+			// by the default_role key in ../options/roles.json
+		}
+	}
 
-	// 5.) while (1) { TAKE_IN_FILE_TO_OPEN }
+	// 1.) execv
+
+	// 2.) while (1) { TAKE_IN_FILE_TO_OPEN }
 
 	return 0;
 }
