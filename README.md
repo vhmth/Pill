@@ -3,7 +3,7 @@ Pill
 
 A convenience wrapper around grep which allows you to easily pillage your code base.
 
-This tool is still under heavy development and will be moved to [https://github.com/Backplane The Backplane GitHub] once it is stable.
+This tool is still under heavy development and will be moved to [The Backplane GitHub](https://github.com/Backplane) once it is stable.
 
 Installation
 ============
@@ -21,4 +21,4 @@ you in the 'bin' folder.
 your path for easy command-line use. You can do this by typing the
 following in the command prompt:
 
-    export $PATH=$PATH/path/to/Pill/bin/pill
+    export PATH="$PATH/path/to/Pill/bin/"
