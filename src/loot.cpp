@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2012 The Backplane Incorporated,
- *     Vinay Hiremath,
- *     Zach Tratar
+ *     Vinay Hiremath
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,7 +23,7 @@
  */
 
 #include <string.h>
-#include "loot.h"
+#include "include/loot.h"
 
 using namespace std;
 
