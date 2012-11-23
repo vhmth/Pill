@@ -21,4 +21,4 @@ you in the 'bin' folder.
 your path for easy command-line use. You can do this by typing the
 following in the command prompt:
 
-    export $PATH=$PATH/path/to/Pill/bin/pill
+    export PATH="$PATH/path/to/Pill/bin/"
