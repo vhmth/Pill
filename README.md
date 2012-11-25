@@ -80,3 +80,9 @@ Note that, if command line flags are passed in, those will take precedence
 over default options in options.json. If an option in options.json is not
 present and a command line flag has not been defined for that option, the
 default for that specific option detailed above will be used.
+
+Future Plans
+============
+
+* Allow for grep flags (i, r, etc.).
+* Allow for file name search (ls -a | grep).
