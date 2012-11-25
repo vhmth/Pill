@@ -22,19 +22,34 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <string.h>
-#include "include/loot.h"
+#ifndef __SCOUT_H__
+#define __SCOUT_H__
 
-using namespace std;
+#include <string>
+#include <vector>
+#include <map>
 
-Loot::Loot(string dir, unsigned int freq) :
-	_dir(new string(&dir)), _freq(freq) {}
+class Scout {
+	public:
+		Scout();
+		~Scout();
+		bool initialize(std::string cmd_role);
 
-Loot::~Loot() {
-	delete _dir;
-	_dir = NULL;
-}
+		std::vector<std::string> getDefaultRole();
+		std::vector<std::string> getRole(std::string role);
+		std::vector<std::string> getRoleNames();
 
-string Loot::spill() {
-	return _dir + " : " + _freq;
-}
+		unsigned int getMaxResults();
+		std::string getRoot();
+		std::string getEditor();
+	private:
+		unsigned int _max;
+		std::string _root;
+		std::string _editor;
+		std::map<std::string, std::vector<std::string> > _roles;
+		std::string _defaultRole;
+
+		bool reportJsonParseError(std::string err);
+};
+
+#endif

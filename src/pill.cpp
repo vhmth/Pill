@@ -22,14 +22,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
-#include <string.h>
-#include <json/json.h>
+#include <string>
+#include <vector>
 
-using namespace std;
+#include "include/scout.h"
 
 const unsigned int NUM_OPTIONS = 4;
-string options[NUM_OPTIONS] = {
+std::string options[NUM_OPTIONS] = {
 	"--editor",
 	"--path",
 	"--role",
@@ -77,12 +76,12 @@ void pill_help() {
 
 int main(int argc, char *argv[]) {
 	// the default options
-	string query = "";
-	string editor = "vim";
-	string path = "./";
-	string role = "";
-	string extensions[] = {"*"};
-	unsigned int results_cap = 25;
+	std::string query = "";
+	std::string editor = "";
+	std::string path = "";
+	std::string role = "";
+	std::vector<std::string> extensions;
+	unsigned int results_cap = 0;
 
 	// get the options from the command line
 	for (int i = 1; i < argc; i++) {
@@ -123,19 +122,26 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	// grab the option from external files
-	if (role.compare("none") || !role.compare("")) {
-		string default_role = "";
-		Json::Value root;
-		Json::Reader reader;
-		// TODO: get the default role from ../options/options.json
-
-		if (default_role.compare("")) {
-			// TODO:
-			// we have the default role from options.json, so let's
-			// load the extensions array with the array pointed to
-			// by the default_role key in ../options/roles.json
-		}
+	// scout will take care of parsing roles.json and options.json
+	// so that we can easily have access to those variables from
+	// here
+	Scout scout;
+	if (!scout.initialize(role)) {
+		return 0;
+	}
+	if (results_cap == 0) {
+		results_cap = scout.getMaxResults();
+	}
+	if (!editor.compare("")) {
+		editor = scout.getEditor();
+	}
+	if (!path.compare("")) {
+		path = scout.getRoot();
+	}
+	if (!role.compare("")) {
+		extensions = scout.getDefaultRole();
+	} else {
+		extensions = scout.getRole(role);
 	}
 
 	// TODO: execute grep

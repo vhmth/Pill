@@ -30,8 +30,6 @@
 class Loot {
 	public:
 		Loot(string dir, unsigned int freq);
-		Loot(Loot const & source);
-		Loot const & operator=(Loot const & source);
 		~Loot();
 
 		string spill();

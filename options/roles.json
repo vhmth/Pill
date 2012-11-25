@@ -1,6 +1,6 @@
 {
-	'frontend': ['js', 'html', 'css'],
-	'backend': ['php', 'py', 'java'],
-	'devops': ['py', 'php', 'java'],
-	'data': ['py', 'php', 'java']
+	"frontend": ["js", "html", "css"],
+	"backend": ["php", "py", "java"],
+	"devops": ["py", "php", "java"],
+	"data": ["py", "php", "java"]
 }
