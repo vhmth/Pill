@@ -27,12 +27,13 @@
 
 #include "include/scout.h"
 
-const unsigned int NUM_OPTIONS = 4;
+const unsigned int NUM_OPTIONS = 5;
 std::string options[NUM_OPTIONS] = {
 	"--editor",
 	"--path",
 	"--role",
-	"--max"
+	"--max",
+	"--get-roles"
 };
 
 void pill_help() {
@@ -62,10 +63,13 @@ void pill_help() {
 				printf("        found in the 'options' folder. Defaults to all extensions\n");
 				printf("        (['*']).");
 				break;
-
-			default:
+			case 3:
 				printf("        Integer specifiying the maximum number of results Pill\n");
 				printf("        should return. Defaults to '25'.");
+				break;
+			default:
+				printf("        Prints out the different roles as well as the file\n");
+				printf("        extensions that make them up (in order of importance).\n");
 				break;
 		}
 		printf("\n");
@@ -107,7 +111,7 @@ int main(int argc, char *argv[]) {
 			}
 		} else if (i == 1) {
 			query = argv[i];
-		} else if (strcmp(argv[i], "--help")) {
+		} else if (strcmp(argv[i], "--help") || strcmp(argv[i], "--get-roles")) {
 			printf("%s is not a valid option for Pill.", argv[i]);
 		}
 	}
@@ -129,6 +133,21 @@ int main(int argc, char *argv[]) {
 	if (!scout.initialize(role)) {
 		return 0;
 	}
+
+	if (!query.compare("--get-roles")) {
+		std::vector<std::string> role_names = scout.getRoleNames();
+		printf("The following roles are available for Pill:\n");
+		for (unsigned int i = 0; i < role_names.size(); i++) {
+			printf("%s: ", role_names[i].c_str());
+			extensions = scout.getRole(role_names[i]);
+			for (unsigned int j = 0; j < extensions.size() - 1; j++) {
+				printf("%s, ", extensions[j].c_str());
+			}
+			printf("%s\n", extensions[extensions.size() - 1].c_str());
+		}
+		return 0;
+	}
+
 	if (results_cap == 0) {
 		results_cap = scout.getMaxResults();
 	}
