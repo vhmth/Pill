@@ -1,6 +1,16 @@
+/***************************************
+
+Example JSON object. The JSON object
+need not have all the fields filled, but
+it must exist.
+
 {
 	"role":            "frontend",
 	"max_results":     25,
 	"root":            "./",
 	"editor":          "vim"
 }
+
+***************************************/
+
+{}
