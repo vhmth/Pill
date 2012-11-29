@@ -9,7 +9,7 @@ pill: pill.o scout.o jsoncpp.o
 pill.o: src/pill.cpp
 	g++ -Wall -c src/pill.cpp -Isrc/include -o bin/pill.o
 
-scout.o: src/scout.cpp
+scout.o: src/scout.cpp src/include/scout.h
 	g++ -Wall -c src/scout.cpp -Ilib/jsoncpp -o bin/scout.o
 
 loot.o: src/loot.cpp src/include/loot.h
