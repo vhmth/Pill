@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "include/scout.h"
+#include "include/grunt.h"
 
 const unsigned int NUM_OPTIONS = 5;
 std::string options[NUM_OPTIONS] = {
@@ -160,7 +161,14 @@ int main(int argc, char *argv[]) {
 		extensions = scout.getRole(role);
 	}
 
-	// TODO: execute grep
+	// build the grep query
+	std::string grep_query = Grunt::makeGrepQuery(
+		query,
+		path,
+		extensions,
+		results_cap
+	);
+	printf("grep query: %s\n", grep_query.c_str());
 
 	// TODO: while (1) { TAKE_IN_FILE_TO_OPEN }
 

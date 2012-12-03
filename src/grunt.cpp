@@ -22,34 +22,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __SCOUT_H__
-#define __SCOUT_H__
-
 #include <string>
 #include <vector>
-#include <map>
 
-class Scout {
-	public:
-		Scout();
-		~Scout();
-		bool initialize(std::string cmd_role);
+#include "include/grunt.h"
 
-		std::vector<std::string> getDefaultRole();
-		std::vector<std::string> getRole(std::string role);
-		std::vector<std::string> getRoleNames();
-
-		unsigned int getMaxResults();
-		std::string getRoot();
-		std::string getEditor();
-	private:
-		unsigned int _max;
-		std::string _root;
-		std::string _editor;
-		std::map<std::string, std::vector<std::string> > _roles;
-		std::string _defaultRole;
-
-		bool reportJsonParseError(std::string err, const char *file);
-};
-
-#endif
+std::string Grunt::makeGrepQuery(
+	std::string query,
+	std::string path,
+	std::vector<std::string> extensions,
+	unsigned int max_results
+) {
+	return "grep";
+}

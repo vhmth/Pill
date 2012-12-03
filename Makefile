@@ -2,8 +2,8 @@
 
 all: pill
 
-pill: pill.o scout.o jsoncpp.o
-	g++ -Wall bin/pill.o bin/scout.o bin/jsoncpp.o -o bin/pill
+pill: pill.o scout.o grunt.o jsoncpp.o
+	g++ -Wall bin/pill.o bin/scout.o bin/grunt.o bin/jsoncpp.o -o bin/pill
 	rm -rf bin/*.o
 
 pill.o: src/pill.cpp
@@ -12,19 +12,25 @@ pill.o: src/pill.cpp
 scout.o: src/scout.cpp src/include/scout.h
 	g++ -Wall -c src/scout.cpp -Ilib/jsoncpp -o bin/scout.o
 
+grunt.o: src/grunt.cpp src/include/grunt.h
+	g++ -Wall -c src/grunt.cpp -o bin/grunt.o
+
 loot.o: src/loot.cpp src/include/loot.h
 	g++ -Wall -c src/loot.cpp -o bin/loot.o
 
 # Debug
 
-debug: pill_debug scout_debug jsoncpp_debug
-	g++ -Wall -g bin/pill.o bin/scout.o bin/jsoncpp.o -o bin/pill
+debug: pill_debug scout_debug grunt_debug jsoncpp_debug
+	g++ -Wall -g bin/pill.o bin/scout.o bin/grunt.o bin/jsoncpp.o -o bin/pill
 
 pill_debug: src/pill.cpp
 	g++ -Wall -g -c src/pill.cpp -Isrc/include -o bin/pill.o
 
 scout_debug: src/scout.cpp src/include/scout.h
 	g++ -Wall -g -c src/scout.cpp -Ilib/jsoncpp -o bin/scout.o
+
+grunt_debug: src/grunt.cpp src/include/grunt.h
+	g++ -Wall -g -c src/grunt.cpp -o bin/grunt.o
 
 loot_debug: src/loot.cpp src/include/loot.h
 	g++ -Wall -g -c src/loot.cpp -o bin/loot.o

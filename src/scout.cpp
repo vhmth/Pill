@@ -38,7 +38,7 @@ bool Scout::initialize(std::string cmd_role){
 	std::ifstream file_stream("options/options.json", std::ifstream::binary);
 
 	if (!json_reader.parse(file_stream, json_root, false)) {
-		return reportJsonParseError(json_reader.getFormattedErrorMessages());
+		return reportJsonParseError(json_reader.getFormattedErrorMessages(), "options.json");
 	}
 
 	if (json_root.isMember("max_results")) {
@@ -69,7 +69,7 @@ bool Scout::initialize(std::string cmd_role){
 	file_stream.open("options/roles.json");
 
 	if (!json_reader.parse(file_stream, json_root, false)) {
-		return reportJsonParseError(json_reader.getFormattedErrorMessages());
+		return reportJsonParseError(json_reader.getFormattedErrorMessages(), "roles.json");
 	}
 
 	if (cmd_role.compare("") && !json_root.isMember(cmd_role)) {
@@ -133,8 +133,8 @@ std::string Scout::getEditor() {
 	return _editor;
 }
 
-bool Scout::reportJsonParseError(std::string err) {
-	printf("There was an error parsing options.json:\n\n");
+bool Scout::reportJsonParseError(std::string err, const char *file) {
+	printf("There was an error parsing %s:\n\n", file);
 	printf("%s", err.c_str());
 	return false;
 }
