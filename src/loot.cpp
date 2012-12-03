@@ -22,19 +22,30 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <string.h>
+#include <string>
+#include <vector>
+
 #include "include/loot.h"
 
-using namespace std;
+Loot::Loot(std::string dir, unsigned int freq) :
+	_directory(dir), _frequency(freq) {}
 
-Loot::Loot(string dir, unsigned int freq) :
-	_dir(new string(&dir)), _freq(freq) {}
+Loot::~Loot() {}
 
-Loot::~Loot() {
-	delete _dir;
-	_dir = NULL;
-}
+/* format:
+ *     DIRECTORY (frequency):
+ *         OCCURANCE 1
+ *         OCCURANCE 2
+ *         etc..
+ */
+std::string Loot::spill() {
+	std::string display = _directory + std::string(" (");
+	display += _frequency;
+	display += std::string("):\n");
+	for (unsigned int i = 0; i < _occurances.size(); i ++) {
+		display += std::string("\t") + _occurances[i];
+	}
+	display += std::string("\n");
 
-string Loot::spill() {
-	return _dir + " : " + _freq;
+	return display;
 }

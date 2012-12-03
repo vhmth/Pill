@@ -79,7 +79,6 @@ void pill_help() {
 }
 
 int main(int argc, char *argv[]) {
-	// the default options
 	std::string query = "";
 	std::string editor = "";
 	std::string path = "";
@@ -127,8 +126,6 @@ int main(int argc, char *argv[]) {
 	}
 
 	// scout will take care of parsing roles.json and options.json
-	// so that we can easily have access to those variables from
-	// here
 	Scout scout;
 	if (!scout.initialize(role)) {
 		return 0;

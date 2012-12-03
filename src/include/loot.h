@@ -25,17 +25,19 @@
 #ifndef __LOOT_H__
 #define __LOOT_H__
 
-#include <string.h>
+#include <string>
+#include <vector>
 
 class Loot {
 	public:
-		Loot(string dir, unsigned int freq);
+		Loot(std::string dir, unsigned int freq);
 		~Loot();
 
-		string spill();
+		std::string spill();
 	private:
-		string _dir;
-		unsigned int _freq;
-}
+		std::string _directory;
+		std::vector<std::string> _occurances;
+		unsigned int _frequency;
+};
 
 #endif
