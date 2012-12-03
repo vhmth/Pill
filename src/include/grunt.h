@@ -28,14 +28,13 @@
 #include <string>
 #include <vector>
 
-class Grunt {
-	public:
-		static std::string makeGrepQuery(
-			std::string query,
-			std::string path,
-			std::vector<std::string> extensions,
-			unsigned int max_results
-		);
+namespace Grunt {
+	std::string makeGrepQuery(
+		std::string query,
+		std::string path,
+		std::vector<std::string> extensions,
+		unsigned int max_results
+	);
 };
 
 #endif

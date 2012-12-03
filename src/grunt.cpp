@@ -33,5 +33,13 @@ std::string Grunt::makeGrepQuery(
 	std::vector<std::string> extensions,
 	unsigned int max_results
 ) {
-	return "grep";
+	std::string resultQuery = std::string("grep");
+
+	// grep flags
+	resultQuery += std::string(" -ir");
+
+	resultQuery += std::string(" ") + query;
+	resultQuery += std::string(" ") + path;
+
+	return resultQuery;
 }
