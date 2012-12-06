@@ -24,9 +24,11 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "include/scout.h"
 #include "include/grunt.h"
+#include "include/parrot.h"
 
 const unsigned int NUM_OPTIONS = 5;
 std::string options[NUM_OPTIONS] = {
@@ -168,7 +170,11 @@ int main(int argc, char *argv[]) {
 		extensions,
 		results_cap
 	);
-	printf("grep query: %s\n", grep_query.c_str());
+
+	std::map<std::string, std::vector<std::string> > p_results;
+	if (!Parrot::listenAndSquawk(grep_query, &p_results)) {
+		return 0;
+	}
 
 	// TODO: while (1) { TAKE_IN_FILE_TO_OPEN }
 

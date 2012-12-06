@@ -30,10 +30,10 @@
 
 namespace Grunt {
 	std::string makeGrepQuery(
-		std::string query,
-		std::string path,
-		std::vector<std::string> extensions,
-		unsigned int max_results
+		const std::string query,
+		const std::string path,
+		const std::vector<std::string> extensions,
+		const unsigned int max_results
 	);
 };
 

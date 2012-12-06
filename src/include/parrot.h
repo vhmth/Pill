@@ -22,37 +22,18 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#ifndef __PARROT_H__
+#define __PARROT_H__
+
 #include <string>
 #include <vector>
+#include <map>
 
-#include "include/grunt.h"
+namespace Parrot {
+	bool listenAndSquawk(
+		const std::string cmd,
+		std::map<std::string, std::vector<std::string> > *_results
+	);
+};
 
-std::string Grunt::makeGrepQuery(
-	const std::string query,
-	const std::string path,
-	const std::vector<std::string> extensions,
-	const unsigned int max_results
-) {
-	std::string resultQuery = std::string("grep");
-
-	// grep flags
-	// TODO: make them passable from the command line
-	resultQuery += std::string(" -ir");
-
-	std::string extensionsQuery("");
-	for (unsigned int i = 0; i < extensions.size(); i++) {
-		if (extensions[i].compare("*")) {
-			extensionsQuery += std::string(" --include *.");
-			extensionsQuery += extensions[i];
-		} else {
-			extensionsQuery = std::string("");
-			break;
-		}
-	}
-
-	resultQuery += extensionsQuery;
-	resultQuery += std::string(" ") + query;
-	resultQuery += std::string(" ") + path;
-
-	return resultQuery;
-}
+#endif
