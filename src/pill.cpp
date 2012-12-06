@@ -194,7 +194,7 @@ int main(int argc, char *argv[]) {
 	std::map<std::string, std::vector<std::string> >::iterator it;
 	unsigned int curr_starting_pos = 0;
 
-	for (unsigned int i = 0; i < extensions.size(); i++) {
+	for (unsigned int i = 0; i < extensions.size() && sorted_results.size() < results_cap; i++) {
 
 		for (it = parrot_results.begin(); it != parrot_results.end(); it++) {
 			std::string path = (*it).first;
@@ -222,10 +222,12 @@ int main(int argc, char *argv[]) {
 				if (currPathVector.size()) {
 					sorted_results.push_back(currPathVector);
 				}
+				if (sorted_results.size() == results_cap) {
+					break;
+				}
 			}
 		}
 
-		// TODO: sorting doesn't work
 		std::vector<std::vector<std::string> >::iterator vecIt = sorted_results.begin();
 		unsigned int j = 0;
 		while (curr_starting_pos != 0 && j < (curr_starting_pos + 1)) {
