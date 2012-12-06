@@ -21,7 +21,7 @@ you in the 'bin' folder.
 your path for easy command-line use. You can do this by typing the
 following in the command prompt:
 
-    export PATH="$PATH/path/to/Pill/bin/"
+    export PATH="$PATH:/path/to/Pill/bin/"
 
 Flags
 =====
@@ -86,5 +86,10 @@ Future Plans
 
 * Allow for grep flags (i, r, etc.).
 * Allow for file name search (ls -a | grep).
-* Allow for specific file extension search from command line (no need for role to be declared)
-* Allow for specifying color switch off on output
+* Allow for specific file extension search from command line (no need for role to be declared).
+* Allow for specifying color switch off on output.
+
+Fixes
+=====
+
+* Fix Pill grabbing incorrect JSON files out of Pill directory.
