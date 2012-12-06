@@ -18,9 +18,6 @@ grunt.o: src/grunt.cpp src/include/grunt.h
 parrot.o: src/parrot.cpp src/include/parrot.h
 	$(CXX) -Wall -c src/parrot.cpp -o bin/parrot.o
 
-loot.o: src/loot.cpp src/include/loot.h
-	$(CXX) -Wall -c src/loot.cpp -o bin/loot.o
-
 # Debug
 
 debug: pill_debug scout_debug grunt_debug parrot_debug jsoncpp_debug
@@ -37,9 +34,6 @@ grunt_debug: src/grunt.cpp src/include/grunt.h
 
 parrot_debug: src/parrot.cpp src/include/parrot.h
 	$(CXX) -Wall -g -c src/parrot.cpp -o bin/parrot.o
-
-loot_debug: src/loot.cpp src/include/loot.h
-	$(CXX) -Wall -g -c src/loot.cpp -o bin/loot.o
 
 # Libs
 

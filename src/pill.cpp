@@ -81,6 +81,12 @@ void pill_help() {
 	return;
 }
 
+static inline bool compareVectorsBySize(
+	const std::vector<std::string>& a,
+	const std::vector<std::string>& b) {
+	return a.size() > b.size();
+}
+
 int main(int argc, char *argv[]) {
 	std::string query = "";
 	std::string editor = "";
@@ -150,6 +156,9 @@ int main(int argc, char *argv[]) {
 
 	if (results_cap == 0) {
 		results_cap = scout.getMaxResults();
+		if (results_cap <= 0) {
+			return 0;
+		}
 	}
 	if (!editor.compare("")) {
 		editor = scout.getEditor();
@@ -163,7 +172,6 @@ int main(int argc, char *argv[]) {
 		extensions = scout.getRole(role);
 	}
 
-	// build the grep query
 	std::string grep_query = Grunt::makeGrepQuery(
 		query,
 		path,
@@ -171,9 +179,68 @@ int main(int argc, char *argv[]) {
 		results_cap
 	);
 
-	std::map<std::string, std::vector<std::string> > p_results;
-	if (!Parrot::listenAndSquawk(grep_query, &p_results)) {
+	std::map<std::string, std::vector<std::string> > parrot_results;
+	if (!Parrot::listenAndSquawk(grep_query, &parrot_results)) {
 		return 0;
+	}
+
+	// sort parrot_results giving weight to the following
+	// factors (in order of decreasing precedence):
+	//     file extension (based on extensions vector)
+	//     number of occurances
+	//
+	// cuts off the results at results_cap
+	std::vector<std::vector<std::string> > sorted_results;
+	std::map<std::string, std::vector<std::string> >::iterator it;
+	unsigned int curr_starting_pos = 0;
+
+	for (unsigned int i = 0; i < extensions.size(); i++) {
+
+		for (it = parrot_results.begin(); it != parrot_results.end(); it++) {
+			std::string path = (*it).first;
+			size_t ext_pos = path.find_last_of(".");
+			if (ext_pos != std::string::npos) {
+				// fix if fget call in Parrot didn't null terminate path string
+				if (path.c_str()[path.size() + 1] == '\0') {
+					char strtemp[path.size()];
+					for (unsigned k = 0; k < path.size() - 1; k++) {
+						strtemp[k] = path.at(k);
+					}
+					strtemp[path.size() - 1] = '\0';
+					path = std::string(strtemp);
+				}
+
+				std::string currPathExtension = path.substr(ext_pos + 1);
+				std::vector<std::string> currPathVector;
+
+				if (!extensions[i].compare("*") || !extensions[i].compare(currPathExtension)) {
+					currPathVector.push_back(path);
+					for (unsigned int i = 0; i < parrot_results[path].size(); i++) {
+						currPathVector.push_back(parrot_results[path][i]);
+					}
+				}
+				if (currPathVector.size()) {
+					sorted_results.push_back(currPathVector);
+				}
+			}
+		}
+
+		// TODO: sorting doesn't work
+		std::vector<std::vector<std::string> >::iterator vecIt = sorted_results.begin();
+		unsigned int j = 0;
+		while (curr_starting_pos != 0 && j < (curr_starting_pos + 1)) {
+			vecIt++;
+			j++;
+		}
+		sort(vecIt, sorted_results.end(), compareVectorsBySize);
+		curr_starting_pos = sorted_results.size() - 1;
+	}
+
+	for (unsigned int i = 0; i < sorted_results.size(); i++) {
+		printf("%s:\n", sorted_results[i][0].c_str());
+		for (unsigned int j = 1; j < sorted_results[i].size(); j++) {
+			printf("\t\t%s\n", sorted_results[i][j].c_str());
+		}
 	}
 
 	// TODO: while (1) { TAKE_IN_FILE_TO_OPEN }
