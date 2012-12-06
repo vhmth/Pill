@@ -30,6 +30,10 @@
 #include "include/grunt.h"
 #include "include/parrot.h"
 
+#define RED "\e[31m"
+#define BLUE "\e[34m"
+#define RESET_COLOR "\e[m"
+
 const unsigned int NUM_OPTIONS = 5;
 std::string options[NUM_OPTIONS] = {
 	"--editor",
@@ -239,11 +243,18 @@ int main(int argc, char *argv[]) {
 	}
 
 	for (unsigned int i = 0; i < sorted_results.size(); i++) {
-		printf("%s:\n", sorted_results[i][0].c_str());
+		const char *path = sorted_results[i][0].c_str();
+		char pathStr[strlen(path) + strlen(RED) + 1];
+		strcpy(pathStr, RED);
+		printf(strcat(pathStr, "%s:\n"), path);
 		for (unsigned int j = 1; j < sorted_results[i].size(); j++) {
-			printf("\t\t%s\n", sorted_results[i][j].c_str());
+			const char *occurance = sorted_results[i][j].c_str();
+			char occStr[strlen(occurance) + strlen(BLUE) + 1];
+			strcpy(occStr, BLUE);
+			printf(strcat(occStr, "\t\t%s\n"), sorted_results[i][j].c_str());
 		}
 	}
+	printf(RESET_COLOR);
 
 	// TODO: while (1) { TAKE_IN_FILE_TO_OPEN }
 
