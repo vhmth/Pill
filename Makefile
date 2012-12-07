@@ -2,8 +2,8 @@
 
 all: pill
 
-pill: pill.o scout.o grunt.o parrot.o jsoncpp.o
-	$(CXX) -Wall bin/pill.o bin/scout.o bin/grunt.o bin/parrot.o bin/jsoncpp.o -o bin/pill
+pill: pill.o scout.o grunt.o parrot.o clerk.o jsoncpp.o
+	$(CXX) -Wall bin/pill.o bin/scout.o bin/grunt.o bin/parrot.o bin/clerk.o bin/jsoncpp.o -o bin/pill
 	rm -rf bin/*.o
 
 pill.o: src/pill.cpp
@@ -18,10 +18,13 @@ grunt.o: src/grunt.cpp src/include/grunt.h
 parrot.o: src/parrot.cpp src/include/parrot.h
 	$(CXX) -Wall -c src/parrot.cpp -o bin/parrot.o
 
+clerk.o: src/clerk.cpp src/include/clerk.h
+	$(CXX) -Wall -c src/clerk.cpp -o bin/clerk.o
+
 # Debug
 
-debug: pill_debug scout_debug grunt_debug parrot_debug jsoncpp_debug
-	$(CXX) -Wall -g bin/pill.o bin/scout.o bin/grunt.o bin/parrot.o bin/jsoncpp.o -o bin/pill
+debug: pill_debug scout_debug grunt_debug parrot_debug clerk_debug jsoncpp_debug
+	$(CXX) -Wall -g bin/pill.o bin/scout.o bin/grunt.o bin/parrot.o bin/clerk.o bin/jsoncpp.o -o bin/pill
 
 pill_debug: src/pill.cpp
 	$(CXX) -Wall -g -c src/pill.cpp -Isrc/include -o bin/pill.o
@@ -34,6 +37,9 @@ grunt_debug: src/grunt.cpp src/include/grunt.h
 
 parrot_debug: src/parrot.cpp src/include/parrot.h
 	$(CXX) -Wall -g -c src/parrot.cpp -o bin/parrot.o
+
+clerk_debug: src/clerk.cpp src/include/clerk.h
+	$(CXX) -Wall -g -c src/clerk.cpp -o bin/clerk.o
 
 # Libs
 

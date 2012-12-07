@@ -88,6 +88,7 @@ Future Plans
 * Allow for file name search (ls -a | grep).
 * Allow for specific file extension search from command line (no need for role to be declared).
 * Allow for specifying color switch off on output.
+* Allow for no auto-open shell (only display).
 
 Fixes
 =====
