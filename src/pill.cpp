@@ -188,7 +188,6 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 	Clerk::speakUp(&pill_results);
-	// feed pill results to the subshell
 
 	return 0;
 }

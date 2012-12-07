@@ -108,7 +108,7 @@ void Clerk::speakUp(const std::vector<std::vector<std::string> > *verdict) {
 		const char *path = (*verdict)[i][0].c_str();
 		char pathStr[strlen(path) + strlen(RED) + 1];
 		strcpy(pathStr, RED);
-		printf(strcat(pathStr, "%s:\n"), path);
+		printf(strcat(pathStr, "%d.) %s:\n"), i + 1, path);
 		for (unsigned int j = 1; j < (*verdict)[i].size(); j++) {
 			const char *occurance = (*verdict)[i][j].c_str();
 			char occStr[strlen(occurance) + strlen(BLUE) + 1];
