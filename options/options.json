@@ -14,8 +14,4 @@ it must exist.
 ***************************************/
 
 {
-	"role":            "frontend",
-	"max_results":     25,
-	"root":            "./",
-	"editor":          "vim"
 }

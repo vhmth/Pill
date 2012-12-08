@@ -188,6 +188,9 @@ int main(int argc, char *argv[]) {
 			results_cap)) {
 		return 0;
 	}
+	if (!pill_results.size()) {
+		return 0;
+	}
 	Clerk::speakUp(&pill_results, query.c_str());
 
 	bool running = true;

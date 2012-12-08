@@ -8,20 +8,14 @@ This tool is still under heavy development and will be moved to [The Backplane G
 Installation
 ============
 
-1.) In the top-level Pill directory (the one you found this README in),
-you simply need to type 'make' in the command prompt. This will compile
-Pill as well as its dependency (jsoncpp) and place the pill executable
-in the 'bin' folder.
+In the top-level Pill directory (the one you found this README in),
+you simply need to type:
 
-Note: If you would like access to the intermediate object files for
-debugging with gdb, type 'make debug', and they will be waiting for
-you in the 'bin' folder.
+    sudo sh install.sh <RC_FILE_PATH_HERE>
 
-2.) After compiling the Pill executable, you will want to export it to
-your path for easy command-line use. You can do this by typing the
-following in the command prompt:
-
-    export PATH="$PATH:/path/to/Pill/bin/"
+substituting <RC_FILE_PATH_HERE> with the path to your shell's configuration
+file. If you're using Bash, this is typically ~/.bashrc. If you're using zsh,
+this is typically ~/.zshrc.
 
 Flags
 =====
@@ -81,6 +75,17 @@ over default options in options.json. If an option in options.json is not
 present and a command line flag has not been defined for that option, the
 default for that specific option detailed above will be used.
 
+Uninstallation
+==============
+
+Again, in the top-level Pill directory (the one you found this README in),
+you simply need to type:
+
+    sudo sh uninstall.sh <RC_FILE_PATH_HERE>
+
+where <RC_FILE_PATH_HERE> is the file path to the same shell configuration
+file you supplied to install.sh.
+
 Future Plans
 ============
 
@@ -90,6 +95,7 @@ Future Plans
 * Allow for specifying color switch off on output.
 * Allow for no auto-open shell (only display).
 * Allow for specifying file path and occurance colors in options.json.
+* Uninstall script (uninstall.sh)
 
 Fixes
 =====

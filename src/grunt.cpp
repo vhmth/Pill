@@ -35,14 +35,12 @@ std::string Grunt::makeGrepQuery(
 ) {
 	std::string resultQuery = std::string("grep");
 
-	// grep flags
-	// TODO: make them passable from the command line
 	resultQuery += std::string(" -ir");
 
 	std::string extensionsQuery("");
 	for (unsigned int i = 0; i < extensions.size(); i++) {
 		if (extensions[i].compare("*")) {
-			extensionsQuery += std::string(" --include *.");
+			extensionsQuery += std::string(" --include=*.");
 			extensionsQuery += extensions[i];
 		} else {
 			extensionsQuery = std::string("");

@@ -35,7 +35,7 @@ Scout::Scout() {}
 bool Scout::initialize(std::string cmd_role){
 	Json::Value json_root;
 	Json::Reader json_reader;
-	std::ifstream file_stream("options/options.json", std::ifstream::binary);
+	std::ifstream file_stream("/Pill/options/options.json", std::ifstream::binary);
 
 	if (!json_reader.parse(file_stream, json_root, false)) {
 		return reportJsonParseError(json_reader.getFormattedErrorMessages(), "options.json");
@@ -66,7 +66,7 @@ bool Scout::initialize(std::string cmd_role){
 	}
 
 	file_stream.close();
-	file_stream.open("options/roles.json");
+	file_stream.open("/Pill/options/roles.json");
 
 	if (!json_reader.parse(file_stream, json_root, false)) {
 		return reportJsonParseError(json_reader.getFormattedErrorMessages(), "roles.json");

@@ -64,12 +64,12 @@ bool Clerk::sortAndRank(
 			size_t ext_pos = path.find_last_of(".");
 			if (ext_pos != std::string::npos) {
 				// fix if fget call in Parrot didn't null terminate path string
-				if (path.c_str()[path.size() + 1] == '\0') {
-					char strtemp[path.size()];
-					for (unsigned k = 0; k < path.size() - 1; k++) {
+				if (path.c_str()[path.size() - 1] != '\0') {
+					char strtemp[path.size() + 1];
+					for (unsigned k = 0; k < path.size(); k++) {
 						strtemp[k] = path.at(k);
 					}
-					strtemp[path.size() - 1] = '\0';
+					strtemp[path.size()] = '\0';
 					path = std::string(strtemp);
 				}
 
