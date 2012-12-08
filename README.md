@@ -95,9 +95,3 @@ Future Plans
 * Allow for specifying color switch off on output.
 * Allow for no auto-open shell (only display).
 * Allow for specifying file path and occurance colors in options.json.
-* Uninstall script (uninstall.sh)
-
-Fixes
-=====
-
-* Fix Pill grabbing incorrect JSON files out of Pill directory.
