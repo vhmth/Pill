@@ -11,9 +11,9 @@ Installation
 In the top-level Pill directory (the one you found this README in),
 you simply need to type:
 
-    sudo sh install.sh <RC_FILE_PATH_HERE>
+    sudo sh install.sh RC_FILE_PATH_HERE
 
-substituting <RC_FILE_PATH_HERE> with the path to your shell's configuration
+substituting RC_FILE_PATH_HERE with the path to your shell's configuration
 file. If you're using Bash, this is typically ~/.bashrc. If you're using zsh,
 this is typically ~/.zshrc.
 
@@ -81,9 +81,9 @@ Uninstallation
 Again, in the top-level Pill directory (the one you found this README in),
 you simply need to type:
 
-    sudo sh uninstall.sh <RC_FILE_PATH_HERE>
+    sudo sh uninstall.sh RC_FILE_PATH_HERE
 
-where <RC_FILE_PATH_HERE> is the file path to the same shell configuration
+where RC_FILE_PATH_HERE is the file path to the same shell configuration
 file you supplied to install.sh.
 
 Future Plans
