@@ -95,3 +95,4 @@ Future Plans
 * Allow for specifying color switch off on output.
 * Allow for no auto-open shell (only display).
 * Allow for specifying file path and occurance colors in options.json.
+* Flags should be taken in first and then the query (less awkward).
