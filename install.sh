@@ -22,15 +22,25 @@
 
 #!/usr/bin/env bash
 
+PILL_INSTALL_GREEN="\033[1;32m"
+PILL_INSTALL_RED="\033[1;31m"
+
 if [ -z "$1" ]
 then
-	echo "No shell configurations file (such as ~/.bashrc or ~/.zshrc) supplied."
+	echo $PILL_INSTALL_RED "$(tput bold)No shell configurations file (such as ~/.bashrc or ~/.zshrc) supplied."
 else
 	make
+
 	PWD = "$(pwd)"
+
 	ln -s $PWD /
+	echo "Added a symlink to this directory in your root directory."
+
 	echo 'export PATH=$PATH:/Pill/bin' > export.txt
+	cp $1 $1.bak
 	cat export.txt >> $1
+	echo "Modified $1 to add Pill export to path. A backup of $1 was saved at $1.bak"
 	rm export.txt
-	echo "Pill has been installed. Please close out of this terminal window and open a new one to begin using it."
+
+	echo $PILL_INSTALL_GREEN "\n\n$(tput bold)Pill has been installed. Please close out of this terminal window and open a new one to begin using it."
 fi

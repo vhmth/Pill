@@ -22,12 +22,20 @@
 
 #!/usr/bin/env bash
 
+PILL_INSTALL_GREEN="\033[1;32m"
+PILL_INSTALL_RED="\033[1;31m"
+
 if [ -z "$1" ]
 then
-	echo "No shell configurations file (such as ~/.bashrc or ~/.zshrc) supplied."
+	echo $PILL_INSTALL_RED "$(tput bold)No shell configurations file (such as ~/.bashrc or ~/.zshrc) supplied."
 else
 	make clean
+
 	rm /Pill
+	echo "Removed symlink to this directory in your root directory."
+
 	sed -i ".bak" '/Pill/d' $1
 	echo "Modified $1 to remove Pill export to path. A backup of $1 was saved at $1.bak"
+
+	echo $PILL_INSTALL_GREEN "\n\n$(tput bold)Pill has been successfully uninstalled. You need not start a new terminal window for these effects to take place."
 fi
