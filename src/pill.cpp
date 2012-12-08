@@ -25,6 +25,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
 
 #include "include/scout.h"
 #include "include/grunt.h"
@@ -188,6 +189,40 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 	Clerk::speakUp(&pill_results, query.c_str());
+
+	bool running = true;
+	std::string choice;
+	while (running) {
+		printf("\nPlease enter a number 1 - %lu to open a file. Type 'exit' if you\n", pill_results.size());
+		printf("wish to exit Pill:\n");
+		std::getline(std::cin, choice);
+
+		if (!choice.compare("exit")) {
+			break;
+		}
+
+		unsigned int iChoice = atoi(choice.c_str());
+		if (iChoice < 1 || iChoice > pill_results.size()) {
+			printf("\n\t%s is an invalid file choice.\n", choice.c_str());
+		} else {
+			running  = false;
+			iChoice--;
+
+			// execute opening command
+			char openCmd[
+				editor.size() +
+				1 +
+				pill_results[iChoice][0].size() +
+				1
+			];
+			strcpy(openCmd, editor.c_str());
+			strcat(openCmd, " ");
+			strcat(openCmd, pill_results[iChoice][0].c_str());
+			openCmd[editor.size() + 1 + pill_results[iChoice][0].size()] = '\0';
+
+			system(openCmd);
+		}
+	}
 
 	return 0;
 }
