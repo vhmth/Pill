@@ -44,7 +44,7 @@ std::string options[NUM_OPTIONS] = {
 void pill_help() {
 	printf("\nWelcome to Pill! Pill allows you to easily pillage your codebase.\n\n");
 	printf("The format of a Pill call is as follows:\n");
-	printf("    pill <SEARCH_STRING> <FLAGS>\n\n");
+	printf("    pill <FLAGS> <SEARCH_STRING>\n\n");
 	printf("The following flags are valid options for Pill:\n");
 
 	for (unsigned int i = 0; i < NUM_OPTIONS; i++) {
@@ -94,34 +94,26 @@ int main(int argc, char *argv[]) {
 	// get the options from the command line
 	for (int i = 1; i < argc; i++) {
 		if (!options[0].compare(argv[i])) {
-			if (i != (argc - 1)) {
-				editor = argv[i + 1];
-				i++;
-			}
+			editor = argv[i + 1];
+			i++;
 		} else if (!options[1].compare(argv[i])) {
-			if (i != (argc - 1)) {
-				path = argv[i + 1];
-				i++;
-			}
+			path = argv[i + 1];
+			i++;
 		} else if (!options[2].compare(argv[i])) {
-			if (i != (argc - 1)) {
-				role = argv[i + 1];
-				i++;
-			}
+			role = argv[i + 1];
+			i++;
 		} else if (!options[3].compare(argv[i])) {
-			if (i != (argc - 1)) {
-				results_cap = atoi(argv[i + 1]);
-				i++;
-			}
-		} else if (i == 1) {
+			results_cap = atoi(argv[i + 1]);
+			i++;
+		} else if (i == argc - 1) {
 			query = argv[i];
 		} else if (strcmp(argv[i], "--help") || strcmp(argv[i], "--get-roles")) {
-			printf("%s is not a valid option for Pill.", argv[i]);
+			printf("%s is not a valid option for Pill.\n", argv[i]);
 		}
 	}
 
 	if (!query.compare("")) {
-		printf("You must provide a search string as the first argument to Pill.\n");
+		printf("You must provide a search string as the last argument to Pill.\n");
 		return 0;
 	}
 
