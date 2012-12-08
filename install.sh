@@ -28,6 +28,9 @@ PILL_INSTALL_RED="\033[1;31m"
 if [ -z "$1" ]
 then
 	echo $PILL_INSTALL_RED "$(tput bold)No shell configurations file (such as ~/.bashrc or ~/.zshrc) supplied."
+elif [ "$(whoami)" != "root" ]
+then
+	echo $PILL_INSTALL_RED "$(tput bold)You must run this script with sudo in order for it to work properly."
 else
 	make
 
