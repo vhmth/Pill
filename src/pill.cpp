@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (!query.compare("")) {
-		printf("You must provide a search string as the first argument to Pill.");
+		printf("You must provide a search string as the first argument to Pill.\n");
 		return 0;
 	}
 
@@ -187,7 +187,7 @@ int main(int argc, char *argv[]) {
 			results_cap)) {
 		return 0;
 	}
-	Clerk::speakUp(&pill_results);
+	Clerk::speakUp(&pill_results, query.c_str());
 
 	return 0;
 }

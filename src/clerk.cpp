@@ -26,6 +26,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <locale>
 
 #include "include/clerk.h"
 
@@ -103,17 +104,74 @@ bool Clerk::sortAndRank(
 	return true;
 }
 
-void Clerk::speakUp(const std::vector<std::vector<std::string> > *verdict) {
+void Clerk::speakUp(
+	const std::vector<std::vector<std::string> > *verdict,
+	const char *query
+) {
+	size_t query_len = strlen(query);
+	// case insensitive querying
+	std::locale settings;
+	std::string ciQuery;
+	for (unsigned int i = 0; i < query_len; i++) {
+		ciQuery += (std::toupper(query[i], settings));
+	}
+
 	for (unsigned int i = 0; i < verdict->size(); i++) {
 		const char *path = (*verdict)[i][0].c_str();
-		char pathStr[strlen(path) + strlen(RED) + 1];
-		strcpy(pathStr, RED);
-		printf(strcat(pathStr, "%d.) %s:\n"), i + 1, path);
+		printf(RED "%d.) %s\n", i + 1, path);
 		for (unsigned int j = 1; j < (*verdict)[i].size(); j++) {
-			const char *occurance = (*verdict)[i][j].c_str();
-			char occStr[strlen(occurance) + strlen(BLUE) + 1];
-			strcpy(occStr, BLUE);
-			printf(strcat(occStr, "\t\t%s\n"), (*verdict)[i][j].c_str());
+			// find out number of occurances and their positions
+			const char *occ = (*verdict)[i][j].c_str();
+			std::string ciOccLine;
+			size_t occLineSize = strlen(occ);
+			for (unsigned int k = 0; k < occLineSize; k++) {
+				ciOccLine += (std::toupper(occ[k], settings));
+			}
+
+			char occLine[strlen(occ) + 1];
+			strcpy(occLine, occ);
+
+			std::vector<size_t> occPositions;
+			size_t occPos = ciOccLine.find(ciQuery, 0);
+			while (occPos != std::string::npos) {
+				occPositions.push_back(occPos);
+				occPos = ciOccLine.find(ciQuery, occPos + 1);
+			}
+
+			size_t numOccs = occPositions.size();
+
+			printf("\t\t");
+			unsigned int currIndex = 0;
+			unsigned int k = 0;
+			while (currIndex < occLineSize) {
+				if (k < numOccs && occPositions[k] == currIndex) {
+					char queryBuf[query_len + 1];
+					memcpy(
+						queryBuf,
+						&occ[currIndex],
+						query_len
+					);
+					queryBuf[query_len] = '\0';
+					printf(RED "%s", queryBuf);
+					currIndex += query_len;
+					k++;
+				} else {
+					size_t lineLen = occPositions[k] - currIndex;
+					if (k >= numOccs) {
+						lineLen = occLineSize - currIndex;
+					}
+					char lineBuf[lineLen + 1];
+					memcpy(
+						lineBuf,
+						&occ[currIndex],
+						lineLen
+					);
+					lineBuf[lineLen] = '\0';
+					printf(BLUE "%s", lineBuf);
+					currIndex += lineLen;
+				}
+			}
+			printf("\n");
 		}
 	}
 	printf(RESET_COLOR);

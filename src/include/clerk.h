@@ -36,7 +36,10 @@ namespace Clerk {
 		std::vector<std::vector<std::string> > *clean,
 		const unsigned int MAX_RESULTS
 	);
-	void speakUp(const std::vector<std::vector<std::string> > *verdict);
+	void speakUp(
+		const std::vector<std::vector<std::string> > *verdict,
+		const char *query
+	);
 };
 
 #endif
