@@ -156,9 +156,9 @@ void Clerk::speakUp(
 					currIndex += query_len;
 					k++;
 				} else {
-					size_t lineLen = occPositions[k] - currIndex;
-					if (k >= numOccs) {
-						lineLen = occLineSize - currIndex;
+					size_t lineLen = occLineSize - currIndex;
+					if (k < numOccs) {
+						lineLen = occPositions[k] - currIndex;
 					}
 					char lineBuf[lineLen + 1];
 					memcpy(
