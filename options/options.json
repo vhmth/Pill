@@ -1,7 +1,7 @@
 /***************************************
 
 Example JSON object. The JSON object
-need not have all the fields filled, but
+need not have any fields filled, but
 it must exist.
 
 {
