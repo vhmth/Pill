@@ -17,6 +17,14 @@ substituting RC_FILE_PATH_HERE with the path to your shell's configuration
 file. If you're using Bash, this is typically ~/.bashrc. If you're using zsh,
 this is typically ~/.zshrc.
 
+Updating
+========
+
+Since Pill will be improved upon, updates will be roled out. To update Pill,
+simply run:
+
+    sh update.sh
+
 Flags
 =====
 
