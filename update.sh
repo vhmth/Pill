@@ -25,8 +25,10 @@
 PILL_INSTALL_GREEN="\033[1;32m"
 
 GIT_UPDATE=$(git pull)
+echo $GIT_UPDATE > gup.txt
+UPDATED=$(grep '.h\|.cpp' gup.txt)
 
-if [ "$GIT_UPDATE" == "Already up-to-date." ]
+if [ "$UPDATED" == "" ]
 then
 	echo $PILL_INSTALL_GREEN "\n$(tput bold)Pill is already up to date."
 else
@@ -34,3 +36,5 @@ else
 	make
 	echo $PILL_INSTALL_GREEN "\n$(tput bold)Pill has been successfully updated."
 fi
+
+rm gup.txt
