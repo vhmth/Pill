@@ -103,3 +103,6 @@ Future Plans
 * Allow for specifying color switch off on output.
 * Allow for no auto-open shell (only display).
 * Allow for specifying file path and occurance colors in options.json.
+* Multi-threaded grep searches.
+* Take advantage of git grep if it exists (indexes for faster searching).
+* Look into using ack if it's present.
