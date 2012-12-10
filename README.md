@@ -3,8 +3,6 @@ Pill
 
 A convenience wrapper around grep which allows you to easily pillage your code base.
 
-This tool is still under heavy development and will be moved to [The Backplane GitHub](https://github.com/Backplane) once it is stable.
-
 Installation
 ============
 
@@ -20,7 +18,7 @@ this is typically ~/.zshrc.
 Updating
 ========
 
-Since Pill will be improved upon, updates will be roled out. To update Pill,
+Since Pill will be heavily improved upon, updates will be roled out. To update Pill,
 simply run:
 
     sh update.sh
