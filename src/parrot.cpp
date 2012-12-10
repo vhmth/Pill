@@ -67,7 +67,8 @@ bool Parrot::listenAndSquawk(
 	const std::string cmd,
 	std::map<std::string, std::vector<std::string> > *_results) {
 
-	const unsigned int MAX_BUFF_SIZE = 500;
+	// TODO: make this a string and use getline to avoid segfaults for really long lines
+	const unsigned int MAX_BUFF_SIZE = 5000;
 
 	FILE *stream = popen(cmd.c_str(), "r");
 	char res_buffer[MAX_BUFF_SIZE];
