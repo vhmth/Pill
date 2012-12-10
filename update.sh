@@ -30,7 +30,7 @@ UPDATED=$(grep '.h\|.cpp' gup.txt)
 
 if [ "$UPDATED" == "" ]
 then
-	echo $PILL_INSTALL_GREEN "\n$(tput bold)Pill is already up to date."
+	echo $PILL_INSTALL_GREEN "$(tput bold)Pill is already up to date."
 else
 	make clean
 	make
