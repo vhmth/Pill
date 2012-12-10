@@ -17,6 +17,14 @@ substituting RC_FILE_PATH_HERE with the path to your shell's configuration
 file. If you're using Bash, this is typically ~/.bashrc. If you're using zsh,
 this is typically ~/.zshrc.
 
+Updating
+========
+
+Since Pill will be improved upon, updates will be roled out. To update Pill,
+simply run:
+
+    sh update.sh
+
 Flags
 =====
 
@@ -95,3 +103,6 @@ Future Plans
 * Allow for specifying color switch off on output.
 * Allow for no auto-open shell (only display).
 * Allow for specifying file path and occurance colors in options.json.
+* Multi-threaded grep searches.
+* Take advantage of git grep if it exists (indexes for faster searching).
+* Look into using ack if it's present.
