@@ -53,11 +53,16 @@ void pill_help() {
 			case 0:
 				printf("        Specifies which editor Pill will open files with if you\n");
 				printf("        choose to quickly open Pill results on the command line.\n");
-				printf("        Defaults to 'vim'.");
+				printf("        If no editor is supplied and none exists in options.json\n");
+				printf("        the Pill subshell prompt for quickly opening its results\n");
+				printf("        will not appear. Additionally, passing 'none' into this\n");
+				printf("        flag will also deactivate the quick-open prompt (useful\n");
+				printf("        if you have an editor specified in options.json but wish\n");
+				printf("        to override this option to only display the Pill results).");
 				break;
 			case 1:
 				printf("        Specifies the top-level path you wish Pill to search from.\n");
-				printf("        Defaults to the current directory './'.\n");
+				printf("        Defaults to the current directory './'.");
 				break;
 			case 2:
 				printf("        Specifies a role you wish to use for the query. Roles are\n");
@@ -66,7 +71,8 @@ void pill_help() {
 				printf("        extension. Roles are defined in the folder 'options'\n");
 				printf("        in a file called roles.js. A sample roles file can be\n");
 				printf("        found in the 'options' folder. Defaults to all extensions\n");
-				printf("        (['*']).");
+				printf("        (['*']). If 'none' is supplied to this flag, all extensions\n");
+				printf("        will be considered (useful for overriding a default role).");
 				break;
 			case 3:
 				printf("        Integer specifiying the maximum number of results Pill\n");
@@ -154,7 +160,7 @@ int main(int argc, char *argv[]) {
 	if (!path.compare("")) {
 		path = scout.getRoot();
 	}
-	if (!role.compare("")) {
+	if (!role.compare("") || !role.compare("none")) {
 		extensions = scout.getDefaultRole();
 	} else {
 		extensions = scout.getRole(role);
@@ -173,10 +179,18 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::vector<std::vector<std::string> > pill_results;
+	std::string prependPath = std::string("");
+	if (grep_query.at(0) == 'c') {
+		prependPath = path;
+		if (prependPath.at(prependPath.size() - 1) != '/') {
+			prependPath += std::string("/");
+		}
+	}
 	if (!Clerk::sortAndRank(
 			&extensions,
 			&parrot_results,
 			&pill_results,
+			prependPath,
 			results_cap)) {
 		return 0;
 	}
@@ -185,37 +199,39 @@ int main(int argc, char *argv[]) {
 	}
 	Clerk::speakUp(&pill_results, query.c_str());
 
-	bool running = true;
-	std::string choice;
-	while (running) {
-		printf("\nPlease enter a number 1 - %lu to open a file. Type 'exit' if you\n", pill_results.size());
-		printf("wish to exit Pill:\n");
-		std::getline(std::cin, choice);
+	if (editor.compare("none")) {
+		bool running = true;
+		std::string choice;
+		while (running) {
+			printf("\nPlease enter a number 1 - %lu to open a file. Type 'exit' if you\n", pill_results.size());
+			printf("wish to exit Pill:\n");
+			std::getline(std::cin, choice);
 
-		if (!choice.compare("exit")) {
-			break;
-		}
+			if (!choice.compare("exit")) {
+				break;
+			}
 
-		unsigned int iChoice = atoi(choice.c_str());
-		if (iChoice < 1 || iChoice > pill_results.size()) {
-			printf("\n\t%s is an invalid file choice.\n", choice.c_str());
-		} else {
-			running  = false;
-			iChoice--;
+			unsigned int iChoice = atoi(choice.c_str());
+			if (iChoice < 1 || iChoice > pill_results.size()) {
+				printf("\n\t%s is an invalid file choice.\n", choice.c_str());
+			} else {
+				running  = false;
+				iChoice--;
 
-			// execute opening command
-			char openCmd[
-				editor.size() +
-				1 +
-				pill_results[iChoice][0].size() +
-				1
-			];
-			strcpy(openCmd, editor.c_str());
-			strcat(openCmd, " ");
-			strcat(openCmd, pill_results[iChoice][0].c_str());
-			openCmd[editor.size() + 1 + pill_results[iChoice][0].size()] = '\0';
+				// execute opening command
+				char openCmd[
+					editor.size() +
+					1 +
+					pill_results[iChoice][0].size() +
+					1
+				];
+				strcpy(openCmd, editor.c_str());
+				strcat(openCmd, " ");
+				strcat(openCmd, pill_results[iChoice][0].c_str());
+				openCmd[editor.size() + 1 + pill_results[iChoice][0].size()] = '\0';
 
-			system(openCmd);
+				system(openCmd);
+			}
 		}
 	}
 

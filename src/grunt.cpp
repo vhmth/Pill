@@ -24,8 +24,69 @@
 
 #include <string>
 #include <vector>
+#include <stdio.h>
 
 #include "include/grunt.h"
+
+static inline bool gitExists(const char *path) {
+	char cmd[
+		3 +
+		strlen(path) +
+		30 +
+		1
+	];
+	strcpy(cmd, "cd ");
+	strcat(cmd, path);
+	strcat(cmd, ";sh /Pill/scripts/gitexists.sh");
+	FILE *stream = popen(cmd, "r");
+	if (stream != NULL) {
+		char result[10];
+		if (fgets(result, 10, stream) != NULL) {
+			return !strcmp(result, "TRUE\n");
+		}
+	}
+
+	return false;
+}
+
+static inline std::string makeExtensionsQuery(
+	std::vector<std::string> extensions,
+	const char *path,
+	bool isGitDir,
+	bool pwdIsGitDir
+) {
+	std::string extensionsQuery("");
+
+	for (unsigned int i = 0; i < extensions.size(); i++) {
+		if (extensions[i].compare("*")) {
+			if (!isGitDir) {
+				extensionsQuery += std::string(" --include=*.");
+			} else {
+				extensionsQuery += std::string(" -- '");
+				if (pwdIsGitDir) {
+					extensionsQuery += std::string(path);
+				}
+				extensionsQuery += std::string("*.");
+			}
+
+			extensionsQuery += extensions[i];
+
+			if (isGitDir) {
+				extensionsQuery += std::string("'");
+			}
+		} else {
+			extensionsQuery = std::string("");
+			break;
+		}
+	}
+
+	if (!extensionsQuery.compare("") && isGitDir && pwdIsGitDir) {
+		extensionsQuery = std::string(" ");
+		extensionsQuery += std::string(path);
+	}
+
+	return extensionsQuery;
+}
 
 std::string Grunt::makeGrepQuery(
 	const std::string query,
@@ -33,24 +94,37 @@ std::string Grunt::makeGrepQuery(
 	const std::vector<std::string> extensions,
 	const unsigned int max_results
 ) {
-	std::string resultQuery = std::string("grep");
+	std::string resultQuery;
+	bool isGitDir = gitExists(path.c_str());
+	bool pwdIsGitDir = gitExists("./");
 
-	resultQuery += std::string(" -ir");
-
-	std::string extensionsQuery("");
-	for (unsigned int i = 0; i < extensions.size(); i++) {
-		if (extensions[i].compare("*")) {
-			extensionsQuery += std::string(" --include=*.");
-			extensionsQuery += extensions[i];
+	if (!isGitDir) {
+		resultQuery = std::string("grep -iIr");
+	} else {
+		if (pwdIsGitDir) {
+			resultQuery = std::string("git grep -Ii");
 		} else {
-			extensionsQuery = std::string("");
-			break;
+			resultQuery = std::string("cd ");
+			resultQuery += path;
+			resultQuery += std::string(";git grep -Ii");
 		}
 	}
 
-	resultQuery += extensionsQuery;
-	resultQuery += std::string(" ") + query;
-	resultQuery += std::string(" ") + path;
+	std::string extensionsQuery = makeExtensionsQuery(
+		extensions,
+		path.c_str(),
+		isGitDir,
+		pwdIsGitDir
+	);
+
+	if (!isGitDir) {
+		resultQuery += extensionsQuery;
+		resultQuery += std::string(" ") + query;
+		resultQuery += std::string(" ") + path;
+	} else {
+		resultQuery += std::string(" ") + query;
+		resultQuery += extensionsQuery;
+	}
 
 	return resultQuery;
 }

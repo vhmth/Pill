@@ -45,6 +45,7 @@ bool Clerk::sortAndRank(
 	const std::vector<std::string> * extensions,
 	std::map<std::string, std::vector<std::string> > *messy,
 	std::vector<std::vector<std::string> > *clean,
+	std::string prependPath,
 	const unsigned int MAX_RESULTS
 ) {
 	// sort the messy vector giving weight to the following
@@ -77,7 +78,7 @@ bool Clerk::sortAndRank(
 				std::vector<std::string> currPathVector;
 
 				if (!(*extensions)[i].compare("*") || !(*extensions)[i].compare(currPathExtension)) {
-					currPathVector.push_back(path);
+					currPathVector.push_back(prependPath + path);
 					for (unsigned int i = 0; i < (*messy)[path].size(); i++) {
 						currPathVector.push_back((*messy)[path][i]);
 					}

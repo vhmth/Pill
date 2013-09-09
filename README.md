@@ -46,7 +46,7 @@ as at least an empty object literal ({}).
         "role":         DEFAULT_ROLE_STRING, (defaults to "")
         "max_results":  DEFAULT_NUM_RESULTS_RETURNED, (defaults to 25)
         "root":         DEFAULT_PATH_STRING_FOR_SEARCH, (defaults to "./")
-        "editor":       DEFAULT_EDITOR_FOR_OPENING_FILES_FROM_SEARCH (defaults to "vim")
+        "editor":       DEFAULT_EDITOR_FOR_OPENING_FILES_FROM_SEARCH (defaults to nothing)
     }
 
 An example may be:
@@ -81,6 +81,18 @@ over default options in options.json. If an option in options.json is not
 present and a command line flag has not been defined for that option, the
 default for that specific option detailed above will be used.
 
+3.) The 'editor' flag:
+
+Pill comes equipped with a built-in subshell that allows you to open
+its results directly from command line. This flag specifies the editor
+which the subshell will use to open a result returned by Pill. If the
+editor option in options.json is not present nor is an editor passed
+in via the "--editor" flag when calling Pill, the quick-open subshell
+will not open, but the results returned by Pill will still be displayed.
+If you have specified the "editor" field in options.json but wish to
+only see the results and not fire this subshell, passing 'none' to the
+command line "--editor" flag will ensure this behavior.
+
 Uninstallation
 ==============
 
@@ -91,17 +103,3 @@ you simply need to type:
 
 where RC_FILE_PATH_HERE is the file path to the same shell configuration
 file you supplied to install.sh.
-
-Future Plans
-============
-
-* Allow for grep flags (i, r, etc.).
-* Allow for specifying no role from command line.
-* Allow for file name search (ls -a | grep).
-* Allow for specific file extension search from command line (no need for role to be declared).
-* Allow for specifying color switch off on output.
-* Allow for no auto-open shell (only display).
-* Allow for specifying file path and occurance colors in options.json.
-* Multi-threaded grep searches.
-* Take advantage of git grep if it exists (indexes for faster searching).
-* Look into using ack if it's present.

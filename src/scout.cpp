@@ -50,7 +50,7 @@ bool Scout::initialize(std::string cmd_role){
 	if (json_root.isMember("editor")) {
 		_editor = json_root.get("editor", "UTF-8").asString();
 	} else {
-		_editor = "vim";
+		_editor = "none";
 	}
 
 	if (json_root.isMember("root")) {
@@ -59,7 +59,7 @@ bool Scout::initialize(std::string cmd_role){
 		_root = "./";
 	}
 
-	if (json_root.isMember("role")) {
+	if (json_root.isMember("role") && cmd_role.compare("none")) {
 		_defaultRole = json_root.get("role", "UTF-8").asString();
 	} else {
 		_defaultRole = "";
@@ -72,7 +72,7 @@ bool Scout::initialize(std::string cmd_role){
 		return reportJsonParseError(json_reader.getFormattedErrorMessages(), "roles.json");
 	}
 
-	if (cmd_role.compare("") && !json_root.isMember(cmd_role)) {
+	if (cmd_role.compare("") && cmd_role.compare("none") && !json_root.isMember(cmd_role)) {
 		printf("%s does not exist in roles.json\n", cmd_role.c_str());
 		return false;
 	}
@@ -95,7 +95,6 @@ bool Scout::initialize(std::string cmd_role){
 }
 
 Scout::~Scout() {}
-
 
 std::vector<std::string> Scout::getDefaultRole() {
 	if (_defaultRole.compare("")) {

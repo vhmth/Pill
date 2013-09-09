@@ -34,6 +34,7 @@ namespace Clerk {
 		const std::vector<std::string> *extensions,
 		std::map<std::string, std::vector<std::string> > *messy,
 		std::vector<std::vector<std::string> > *clean,
+		std::string prependPath,
 		const unsigned int MAX_RESULTS
 	);
 	void speakUp(
